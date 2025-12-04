@@ -1,9 +1,23 @@
+"use client";
+
 import Link from "next/link";
-import { BookOpenText } from "lucide-react"; // better icon for study platform
-import { LoginForm } from "../../_components/login-form";
+import { BookOpenText } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { supabase } from "@/lib/supabase-client";
+import { LoginForm } from "../../_components/login-form"; // named export
 import { GoogleButton } from "../../_components/social-auth/google-button";
 
 export default function LoginV1() {
+  const router = useRouter();
+
+  const handleGoogleLogin = async () => {
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: { redirectTo: window.location.origin + "/dashboard" },
+    });
+    if (error) console.error(error.message);
+  };
+
   return (
     <div className="flex h-dvh">
       {/* Left Section */}
@@ -26,6 +40,7 @@ export default function LoginV1() {
       {/* Right Section */}
       <div className="bg-background flex w-full items-center justify-center p-8 lg:w-2/3">
         <div className="w-full max-w-md space-y-10 py-24 lg:py-32">
+          {/* Header */}
           <div className="space-y-4 text-center">
             <div className="font-semibold tracking-tight text-xl">
               Welcome to AI StudyStation
@@ -36,17 +51,22 @@ export default function LoginV1() {
             </div>
           </div>
 
+          {/* Login Form */}
           <div className="space-y-4">
-            <LoginForm />
+            <LoginForm /> {/* ✅ named export works here */}
 
             <GoogleButton
               className="w-full"
+              onClick={handleGoogleLogin}
               variant="outline"
             />
 
             <p className="text-muted-foreground text-center text-xs">
               Don&apos;t have an account?{" "}
-              <Link href="/main/auth/v1/register" className="text-primary font-medium">
+              <Link
+                href="/auth/v1/register"
+                className="text-primary font-medium"
+              >
                 Register
               </Link>
             </p>

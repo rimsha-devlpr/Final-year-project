@@ -4,7 +4,7 @@ import {
   EllipsisVertical,
   CircleUser,
   // CreditCard,
-  // MessageSquareDot,
+   MessageSquareDot,
   LogOut,
 } from "lucide-react";
 
@@ -80,12 +80,12 @@ export function NavUser({
               {/* <DropdownMenuItem>
                 <CreditCard />
                 Billing
-              </DropdownMenuItem>
+              </DropdownMenuItem> */}
 
               <DropdownMenuItem>
                 <MessageSquareDot />
                 Notifications
-              </DropdownMenuItem> */}
+              </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
