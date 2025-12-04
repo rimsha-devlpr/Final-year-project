@@ -223,3 +223,106 @@ export function LoginForm() {
     </Form>
   );
 }
+/*
+"use client";
+
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { toast } from "sonner";
+import { supabase } from "@/lib/supabase-client";
+
+import { Button } from "@/components/ui/button";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
+
+const FormSchema = z.object({
+  email: z.string().email(),
+  password: z.string().min(6),
+  remember: z.boolean().optional(),
+});
+
+export function LoginForm() {
+  const router = useRouter();
+  const form = useForm<z.infer<typeof FormSchema>>({
+    resolver: zodResolver(FormSchema),
+    defaultValues: { email: "", password: "", remember: false },
+  });
+
+  const onSubmit = async (data: z.infer<typeof FormSchema>) => {
+    try {
+      // 1️⃣ Sign in
+      const { data: authData, error } = await supabase.auth.signInWithPassword({
+        email: data.email,
+        password: data.password,
+      });
+
+      if (error) throw error;
+
+      if (!authData.user) throw new Error("Login failed");
+
+      // 2️⃣ Check email confirmed
+      if (!authData.user.email_confirmed_at) {
+        toast.error("Please confirm your email before logging in.");
+        return;
+      }
+
+      // 3️⃣ Check admins table
+      const { data: adminData, error: adminError } = await supabase
+        .from("admins")
+        .select("*")
+        .eq("id", authData.user.id)
+        .single();
+
+      if (adminError || !adminData || adminData.role !== "admin") {
+        toast.error("You are not authorized as admin.");
+        return;
+      }
+
+      toast.success("Login successful!");
+      router.push("/dashboard");
+    } catch (err: any) {
+      toast.error(err.message || "Login failed.");
+    }
+  };
+
+  return (
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        <FormField control={form.control} name="email" render={({ field }) => (
+          <FormItem>
+            <FormLabel>Email</FormLabel>
+            <FormControl>
+              <Input {...field} type="email" placeholder="you@example.com" />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )} />
+
+        <FormField control={form.control} name="password" render={({ field }) => (
+          <FormItem>
+            <FormLabel>Password</FormLabel>
+            <FormControl>
+              <Input {...field} type="password" placeholder="••••••••" />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )} />
+
+        <FormField control={form.control} name="remember" render={({ field }) => (
+          <FormItem className="flex items-center">
+            <Checkbox checked={field.value} onCheckedChange={field.onChange} id="remember" />
+            <FormLabel htmlFor="remember" className="ml-2 text-sm text-muted-foreground">
+              Remember me
+            </FormLabel>
+          </FormItem>
+        )} />
+
+        <Button type="submit" className="w-full">Login</Button>
+      </form>
+    </Form>
+  );
+}
+*/
