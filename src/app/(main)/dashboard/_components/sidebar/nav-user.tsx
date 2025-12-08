@@ -1,13 +1,13 @@
 "use client";
 
+import { useState, useEffect } from "react";
+import { supabase } from "@/lib/supabase-client";
 import {
   EllipsisVertical,
   CircleUser,
-  // CreditCard,
-   MessageSquareDot,
+  MessageSquareDot,
   LogOut,
 } from "lucide-react";
-
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -21,16 +21,32 @@ import {
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from "@/components/ui/sidebar";
 import { getInitials } from "@/lib/utils";
 
-export function NavUser({
-  user,
-}: {
-  readonly user: {
-    readonly name: string;
-    readonly email: string;
-    readonly avatar: string;
-  };
-}) {
+export function NavUser() {
   const { isMobile } = useSidebar();
+  const [user, setUser] = useState<{ name: string; email: string; avatar?: string } | null>(null);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const { data: { user: currentUser } } = await supabase.auth.getUser();
+      if (!currentUser) return;
+
+      // Fetch the full name from admins table
+      const { data: adminProfile, error } = await supabase
+        .from("admins")
+        .select("full_name, email")
+        .eq("id", currentUser.id)
+        .single();
+
+      setUser({
+        name: adminProfile?.full_name || currentUser.email || "Admin",
+        email: adminProfile?.email || currentUser.email || "admin@example.com",
+        avatar: currentUser.user_metadata?.avatar_url || "",
+      });
+    };
+    fetchUser();
+  }, []);
+
+  if (!user) return null;
 
   return (
     <SidebarMenu>
@@ -76,19 +92,13 @@ export function NavUser({
                 <CircleUser />
                 Account
               </DropdownMenuItem>
-
-              {/* <DropdownMenuItem>
-                <CreditCard />
-                Billing
-              </DropdownMenuItem> */}
-
               <DropdownMenuItem>
                 <MessageSquareDot />
                 Notifications
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={async () => { await supabase.auth.signOut(); window.location.href = "/auth/v1/login"; }}>
               <LogOut />
               Log out
             </DropdownMenuItem>

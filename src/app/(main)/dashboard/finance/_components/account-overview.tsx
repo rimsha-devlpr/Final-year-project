@@ -1,5 +1,7 @@
 "use client";
 
+import { useState, useEffect } from "react";
+import { supabase } from "@/lib/supabase-client";
 import { Plus } from "lucide-react";
 import { siApple, siPaypal, siOpenai, siVercel, siFigma } from "simple-icons";
 
@@ -25,46 +27,36 @@ function ChipSVG() {
   );
 }
 
-const recentPayments = [
-  {
-    id: 1,
-    icon: siPaypal,
-    title: "Advance Payment",
-    subtitle: "Received via PayPal for Website Project",
-    type: "credit",
-    amount: 1200,
-    date: "Jul 8",
-  },
-  {
-    id: 2,
-    icon: siOpenai,
-    title: "ChatGPT Subscription",
-    subtitle: "OpenAI monthly subscription",
-    type: "debit",
-    amount: 20,
-    date: "Jul 7",
-  },
-  {
-    id: 3,
-    icon: siVercel,
-    title: "Vercel Team Subscription",
-    subtitle: "Vercel cloud hosting charges",
-    type: "debit",
-    amount: 160,
-    date: "Jul 4",
-  },
-  {
-    id: 4,
-    icon: siFigma,
-    title: "Figma Pro",
-    subtitle: "Figma professional plan",
-    type: "debit",
-    amount: 35,
-    date: "Jul 2",
-  },
-];
-
 export function AccountOverview() {
+  const [userName, setUserName] = useState("User");
+
+  useEffect(() => {
+    const fetchUserName = async () => {
+      const { data: authData } = await supabase.auth.getUser();
+      const currentUser = authData.user;
+
+      if (!currentUser) return;
+
+      // Fetch full name from 'admins' table
+      const { data: adminProfile } = await supabase
+        .from("admins")
+        .select("full_name")
+        .eq("id", currentUser.id)
+        .single();
+
+      setUserName(adminProfile?.full_name || currentUser.user_metadata?.name || currentUser.email || "User");
+    };
+
+    fetchUserName();
+  }, []);
+
+  const recentPayments = [
+    { id: 1, icon: siPaypal, title: "Advance Payment", subtitle: "Received via PayPal for Website Project", type: "credit", amount: 1200, date: "Jul 8" },
+    { id: 2, icon: siOpenai, title: "ChatGPT Subscription", subtitle: "OpenAI monthly subscription", type: "debit", amount: 20, date: "Jul 7" },
+    { id: 3, icon: siVercel, title: "Vercel Team Subscription", subtitle: "Vercel cloud hosting charges", type: "debit", amount: 160, date: "Jul 4" },
+    { id: 4, icon: siFigma, title: "Figma Pro", subtitle: "Figma professional plan", type: "debit", amount: 35, date: "Jul 2" },
+  ];
+
   return (
     <Card className="shadow-xs">
       <CardHeader className="items-center">
@@ -80,9 +72,7 @@ export function AccountOverview() {
         <Tabs className="gap-4" defaultValue="virtual">
           <TabsList className="w-full">
             <TabsTrigger value="virtual">Virtual</TabsTrigger>
-            <TabsTrigger value="physical" disabled>
-              Physical
-            </TabsTrigger>
+            <TabsTrigger value="physical" disabled>Physical</TabsTrigger>
           </TabsList>
           <TabsContent value="virtual">
             <div className="space-y-4">
@@ -93,7 +83,7 @@ export function AccountOverview() {
                 <div className="absolute top-1/2 w-full -translate-y-1/2">
                   <div className="flex items-end justify-between px-6">
                     <span className="text-accent font-mono text-lg leading-none font-medium tracking-wide uppercase">
-                      Arham Khan
+                      {userName} {/* Full name from admins table */}
                     </span>
                     <ChipSVG />
                   </div>
@@ -124,22 +114,15 @@ export function AccountOverview() {
               </div>
 
               <div className="flex gap-2">
-                <Button className="flex-1" variant="outline" size="sm">
-                  Freeze Card
-                </Button>
-                <Button className="flex-1" variant="outline" size="sm">
-                  Set Limit
-                </Button>
-                <Button className="flex-1" variant="outline" size="sm">
-                  More
-                </Button>
+                <Button className="flex-1" variant="outline" size="sm">Freeze Card</Button>
+                <Button className="flex-1" variant="outline" size="sm">Set Limit</Button>
+                <Button className="flex-1" variant="outline" size="sm">More</Button>
               </div>
 
               <Separator />
 
               <div className="space-y-4">
                 <h6 className="text-muted-foreground text-sm uppercase">Recent Payments</h6>
-
                 <div className="space-y-4">
                   {recentPayments.map((transaction) => (
                     <div key={transaction.id} className="flex items-center gap-2">
@@ -152,12 +135,7 @@ export function AccountOverview() {
                           <p className="text-muted-foreground line-clamp-1 text-xs">{transaction.subtitle}</p>
                         </div>
                         <div>
-                          <span
-                            className={cn(
-                              "text-sm leading-none font-medium tabular-nums",
-                              transaction.type === "debit" ? "text-destructive" : "text-green-500",
-                            )}
-                          >
+                          <span className={cn("text-sm leading-none font-medium tabular-nums", transaction.type === "debit" ? "text-destructive" : "text-green-500")}>
                             {formatCurrency(transaction.amount, { noDecimals: true })}
                           </span>
                         </div>
@@ -165,10 +143,7 @@ export function AccountOverview() {
                     </div>
                   ))}
                 </div>
-
-                <Button className="w-full" size="sm" variant="outline">
-                  View All Payments
-                </Button>
+                <Button className="w-full" size="sm" variant="outline">View All Payments</Button>
               </div>
             </div>
           </TabsContent>
