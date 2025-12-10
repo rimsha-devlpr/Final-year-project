@@ -1,297 +1,68 @@
-/*import { ColumnDef } from "@tanstack/react-table";
-import { EllipsisVertical } from "lucide-react";
-import z from "zod";
+"use client";
 
-import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-
-import { recentLeadSchema } from "./schema";
-
-export const recentLeadsColumns: ColumnDef<z.infer<typeof recentLeadSchema>>[] = [
-  {
-    id: "select",
-    header: ({ table }) => (
-      <div className="flex items-center justify-center">
-        <Checkbox
-          checked={table.getIsAllPageRowsSelected()}
-          onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-          aria-label="Select all"
-        />
-      </div>
-    ),
-    cell: ({ row }) => (
-      <div className="flex items-center justify-center">
-        <Checkbox
-          checked={row.getIsSelected()}
-          onCheckedChange={(value) => row.toggleSelected(!!value)}
-          aria-label="Select row"
-        />
-      </div>
-    ),
-    enableSorting: false,
-    enableHiding: false,
-  },
-  {
-    accessorKey: "id",
-    header: ({ column }) => <DataTableColumnHeader column={column} title="Ref" />,
-    cell: ({ row }) => <span className="tabular-nums">{row.original.id}</span>,
-    enableSorting: false,
-    enableHiding: false,
-  },
-  {
-    accessorKey: "name",
-    header: ({ column }) => <DataTableColumnHeader column={column} title="Name" />,
-    cell: ({ row }) => <span>{row.original.name}</span>,
-    enableHiding: false,
-  },
-  {
-    accessorKey: "company",
-    header: ({ column }) => <DataTableColumnHeader column={column} title="Company" />,
-    cell: ({ row }) => <span>{row.original.company}</span>,
-    enableSorting: false,
-  },
-  {
-    accessorKey: "status",
-    header: ({ column }) => <DataTableColumnHeader column={column} title="Status" />,
-    cell: ({ row }) => <Badge variant="secondary">{row.original.status}</Badge>,
-    enableSorting: false,
-  },
-  {
-    accessorKey: "source",
-    header: ({ column }) => <DataTableColumnHeader column={column} title="Source" />,
-    cell: ({ row }) => <Badge variant="outline">{row.original.source}</Badge>,
-    enableSorting: false,
-  },
-  {
-    accessorKey: "lastActivity",
-    header: ({ column }) => <DataTableColumnHeader column={column} title="Last Activity" />,
-    cell: ({ row }) => <span className="text-muted-foreground tabular-nums">{row.original.lastActivity}</span>,
-    enableSorting: false,
-  },
-  {
-    id: "actions",
-    cell: () => (
-      <Button variant="ghost" className="text-muted-foreground flex size-8" size="icon">
-        <EllipsisVertical />
-        <span className="sr-only">Open menu</span>
-      </Button>
-    ),
-    enableSorting: false,
-  },
-];
-*/
-/*import { ColumnDef } from "@tanstack/react-table";
-import { EllipsisVertical } from "lucide-react";
-import z from "zod";
-
-import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-
-import { recentLeadSchema } from "./schema";
-
-export const recentLeadsColumns: ColumnDef<z.infer<typeof recentLeadSchema>>[] = [
-  {
-    id: "select",
-    header: ({ table }) => (
-      <div className="flex items-center justify-center">
-        <Checkbox
-          checked={table.getIsAllPageRowsSelected()}
-          onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-          aria-label="Select all"
-        />
-      </div>
-    ),
-    cell: ({ row }) => (
-      <div className="flex items-center justify-center">
-        <Checkbox
-          checked={row.getIsSelected()}
-          onCheckedChange={(value) => row.toggleSelected(!!value)}
-          aria-label="Select row"
-        />
-      </div>
-    ),
-    enableSorting: false,
-    enableHiding: false,
-  },
-  {
-    accessorKey: "id",
-    header: ({ column }) => <DataTableColumnHeader column={column} title="Ref" />,
-    cell: ({ row }) => <span className="tabular-nums">{row.original.id}</span>,
-    enableSorting: false,
-    enableHiding: false,
-  },
-  {
-    accessorKey: "studentName",
-    header: ({ column }) => <DataTableColumnHeader column={column} title="Student Name" />,
-    cell: ({ row }) => <span>{row.original.studentName}</span>,
-    enableHiding: false,
-  },
-  {
-    accessorKey: "topicFile",
-    header: ({ column }) => <DataTableColumnHeader column={column} title="Topic/File" />,
-    cell: ({ row }) => <span>{row.original.topicFile}</span>,
-    enableSorting: false,
-  },
-  {
-    accessorKey: "status",
-    header: ({ column }) => <DataTableColumnHeader column={column} title="Status" />,
-    cell: ({ row }) => <Badge variant="secondary">{row.original.status}</Badge>,
-    enableSorting: false,
-  },
-  {
-    accessorKey: "token",
-    header: ({ column }) => <DataTableColumnHeader column={column} title="Token" />,
-    cell: ({ row }) => <span className="tabular-nums">{row.original.token}</span>,
-    enableSorting: false,
-  },
-  {
-    accessorKey: "source",
-    header: ({ column }) => <DataTableColumnHeader column={column} title="Source" />,
-    cell: ({ row }) => <Badge variant="outline">{row.original.source}</Badge>,
-    enableSorting: false,
-  },
-  {
-    accessorKey: "lastActivity",
-    header: ({ column }) => <DataTableColumnHeader column={column} title="Last Activity" />,
-    cell: ({ row }) => <span className="text-muted-foreground tabular-nums">{row.original.lastActivity}</span>,
-    enableSorting: false,
-  },
-  {
-    id: "actions",
-    cell: () => (
-      <Button variant="ghost" className="text-muted-foreground flex size-8" size="icon">
-        <EllipsisVertical />
-        <span className="sr-only">Open menu</span>
-      </Button>
-    ),
-    enableSorting: false,
-  },
-];
-*/
-/*import { ColumnDef } from "@tanstack/react-table";
-import { EllipsisVertical } from "lucide-react";
-import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-
-export const registeredUsersColumns: ColumnDef<any>[] = [
-  {
-    id: "select",
-    header: ({ table }) => (
-      <div className="flex items-center justify-center">
-        <Checkbox
-          checked={table.getIsAllPageRowsSelected()}
-          onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-          aria-label="Select all"
-        />
-      </div>
-    ),
-    cell: ({ row }) => (
-      <div className="flex items-center justify-center">
-        <Checkbox
-          checked={row.getIsSelected()}
-          onCheckedChange={(value) => row.toggleSelected(!!value)}
-          aria-label="Select row"
-        />
-      </div>
-    ),
-    enableSorting: false,
-    enableHiding: false,
-  },
-  {
-    accessorKey: "id",
-    header: ({ column }) => <DataTableColumnHeader column={column} title="ID" />,
-    cell: ({ row }) => <span className="tabular-nums">{row.original.id}</span>,
-    enableSorting: false,
-  },
-  {
-    accessorKey: "username",
-    header: ({ column }) => <DataTableColumnHeader column={column} title="Username" />,
-    cell: ({ row }) => <span>{row.original.username}</span>,
-    enableSorting: false,
-  },
-  {
-    accessorKey: "email",
-    header: ({ column }) => <DataTableColumnHeader column={column} title="Email" />,
-    cell: ({ row }) => <span>{row.original.email}</span>,
-    enableSorting: false,
-  },
-  {
-    accessorKey: "created_at",
-    header: ({ column }) => <DataTableColumnHeader column={column} title="Registered At" />,
-    cell: ({ row }) => <span>{row.original.created_at}</span>,
-    enableSorting: false,
-  },
-  {
-    id: "actions",
-    cell: ({ row }) => (
-      <Button variant="ghost" className="text-muted-foreground flex size-8" size="icon" onClick={() => console.log("Action for", row.original.id)}>
-        <EllipsisVertical />
-        <span className="sr-only">Open menu</span>
-      </Button>
-    ),
-    enableSorting: false,
-  },
-];*/
 import { ColumnDef } from "@tanstack/react-table";
-import { EllipsisVertical } from "lucide-react";
+import { Checkbox } from "@/components/ui/checkbox";
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Pencil, Trash } from "lucide-react";
 
 export const registeredUsersColumns: ColumnDef<any>[] = [
   {
     id: "select",
     header: ({ table }) => (
-      <div className="flex items-center justify-center">
-        <Checkbox
-          checked={table.getIsAllPageRowsSelected()}
-          onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-          aria-label="Select all"
-        />
-      </div>
+      <Checkbox
+        checked={table.getIsAllPageRowsSelected()}
+        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+        aria-label="Select all"
+      />
     ),
     cell: ({ row }) => (
-      <div className="flex items-center justify-center">
-        <Checkbox
-          checked={row.getIsSelected()}
-          onCheckedChange={(value) => row.toggleSelected(!!value)}
-          aria-label="Select row"
-        />
-      </div>
+      <Checkbox
+        checked={row.getIsSelected()}
+        onCheckedChange={(value) => row.toggleSelected(!!value)}
+        aria-label="Select row"
+      />
     ),
     enableSorting: false,
     enableHiding: false,
   },
-  {
+  /*{
     accessorKey: "id",
     header: ({ column }) => <DataTableColumnHeader column={column} title="ID" />,
     cell: ({ row }) => <span className="tabular-nums">{row.original.id}</span>,
-    enableSorting: false,
-  },
+    enableSorting: true,
+  },*/
+  
   {
     accessorKey: "username",
     header: ({ column }) => <DataTableColumnHeader column={column} title="Username" />,
     cell: ({ row }) => <span>{row.original.username}</span>,
-    enableSorting: false,
+    enableSorting: true,
+  },
+  {
+    accessorKey: "full_name",
+    header: ({ column }) => <DataTableColumnHeader column={column} title="Full Name" />,
+    cell: ({ row }) => <span>{row.original.full_name}</span>,
+    enableSorting: true,
   },
   {
     accessorKey: "email",
     header: ({ column }) => <DataTableColumnHeader column={column} title="Email" />,
     cell: ({ row }) => <span>{row.original.email}</span>,
-    enableSorting: false,
+    enableSorting: true,
   },
   {
-    accessorKey: "created_at",
-    header: ({ column }) => <DataTableColumnHeader column={column} title="Registered At" />,
-    cell: ({ row }) => <span>{row.original.created_at}</span>,
-    enableSorting: false,
+    accessorKey: "phone_no",
+    header: ({ column }) => <DataTableColumnHeader column={column} title="Phone No" />,
+    cell: ({ row }) => <span>{row.original.phone_no}</span>,
+    enableSorting: true,
   },
+ /* {
+    accessorKey: "updated_at",
+    header: ({ column }) => <DataTableColumnHeader column={column} title="Updated At" />,
+    cell: ({ row }) => <span>{new Date(row.original.updated_at).toLocaleString()}</span>,
+    enableSorting: true,
+  },*/
   {
     id: "actions",
     cell: ({ row }) => {
@@ -313,23 +84,24 @@ export const registeredUsersColumns: ColumnDef<any>[] = [
       };
 
       return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="icon">
-              <EllipsisVertical />
-              <span className="sr-only">Open menu</span>
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuItem onClick={() => alert(`Edit user ${userId}`)}>Edit</DropdownMenuItem>
-            <DropdownMenuItem onClick={() => alert(`Update user ${userId}`)}>Update</DropdownMenuItem>
-            <DropdownMenuItem onClick={handleDelete}>Delete</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <div className="flex gap-2">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => alert(`Edit user ${userId}`)}
+          >
+            <Pencil className="h-4 w-4" />
+          </Button>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={handleDelete}
+          >
+            <Trash className="h-4 w-4 text-red-600" />
+          </Button>
+        </div>
       );
     },
     enableSorting: false,
   },
 ];
-
-

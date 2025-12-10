@@ -1,19 +1,23 @@
-/*import { ColumnDef } from "@tanstack/react-table";
-import { EllipsisVertical } from "lucide-react";
-import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
-import { Button } from "@/components/ui/button";
+"use client";
+
+import { ColumnDef } from "@tanstack/react-table";
 import { Checkbox } from "@/components/ui/checkbox";
+import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Pencil, Trash } from "lucide-react";
 
 export const registeredUsersColumns: ColumnDef<any>[] = [
+  // SELECT CHECKBOX (centered)
   {
-    i{ EllipsisVertical } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import d: "select",
+    id: "select",
     header: ({ table }) => (
       <div className="flex items-center justify-center">
         <Checkbox
           checked={table.getIsAllPageRowsSelected()}
-          onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+          onCheckedChange={(value) =>
+            table.toggleAllPageRowsSelected(!!value)
+          }
           aria-label="Select all"
         />
       </div>
@@ -27,138 +31,77 @@ import d: "select",
         />
       </div>
     ),
-  },
-  {
-    accessorKey: "id",
-    header: ({ column }) => <DataTableColumnHeader column={column} title="ID" />,
-    cell: ({ row }) => <span>{row.original.id}</span>,
-  },
-  {
-    accessorKey: "username",
-    header: ({ column }) => <DataTableColumnHeader column={column} title="Username" />,
-    cell: ({ row }) => <span>{row.original.username}</span>,
-  },
-  {
-    accessorKey: "email",
-    header: ({ column }) => <DataTableColumnHeader column={column} title="Email" />,
-    cell: ({ row }) => <span>{row.original.email}</span>,
-  },
-  {
-    accessorKey: "created_at",
-    header: ({ column }) => <DataTableColumnHeader column={column} title="Registered At" />,
-    cell: ({ row }) => <span>{row.original.created_at}</span>,
-  },
-  {
-    id: "actions",
-    cell: ({ row }) => (
-      <Button variant="ghost" size="icon">
-        <EllipsisVertical />
-        <span className="sr-only">Open menu</span>
-      </Button>
-    ),
-  },
-];
-*/
-"use client";
-
-import { ColumnDef } from "@tanstack/react-table";
-import { Checkbox } from "@/components/ui/checkbox";
-import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
-import { Button } from "@/components/ui/button";
-import { EllipsisVertical } from "lucide-react";
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuItem,
-} from "@/components/ui/dropdown-menu";
-
-export const registeredUsersColumns: ColumnDef<any>[] = [
-  {
-    id: "select",
-    header: ({ table }) => (
-      <div className="flex items-center justify-center">
-        <Checkbox
-          checked={table.getIsAllPageRowsSelected()}
-          onCheckedChange={(val) => table.toggleAllPageRowsSelected(!!val)}
-        />
-      </div>
-    ),
-    cell: ({ row }) => (
-      <div className="flex items-center justify-center">
-        <Checkbox
-          checked={row.getIsSelected()}
-          onCheckedChange={(val) => row.toggleSelected(!!val)}
-        />
-      </div>
-    ),
     enableSorting: false,
     enableHiding: false,
   },
 
-  {
-    accessorKey: "id",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="ID" />
-    ),
-    cell: ({ row }) => <span className="tabular-nums">{row.original.id}</span>,
-    enableSorting: false,
-  },
-
+  // USERNAME
   {
     accessorKey: "username",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Username" />
     ),
     cell: ({ row }) => (
-      <div className="flex items-center gap-2">
-        <img
-          src={row.original.profile_image || "/default-avatar.png"}
-          alt="Profile"
-          className="w-10 h-10 rounded-full object-cover border"
-        />
-        <span>{row.original.username}</span>
-      </div>
+      <span className="max-w-[140px] truncate whitespace-nowrap">
+        {row.original.username}
+      </span>
     ),
-    enableSorting: false,
+    enableSorting: true,
   },
 
+  // FULL NAME
+  {
+    accessorKey: "full_name",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Full Name" />
+    ),
+    cell: ({ row }) => (
+      <span className="max-w-[160px] truncate whitespace-nowrap hidden sm:block">
+        {row.original.full_name}
+      </span>
+    ),
+  },
+
+  // EMAIL
   {
     accessorKey: "email",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Email" />
     ),
-    cell: ({ row }) => <span>{row.original.email}</span>,
-    enableSorting: false,
-  },
-
-  {
-    accessorKey: "mobile_no",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Mobile No" />
+    cell: ({ row }) => (
+      <span className="max-w-[200px] truncate whitespace-nowrap hidden lg:block text-muted-foreground">
+        {row.original.email}
+      </span>
     ),
-    cell: ({ row }) => <span>{row.original.mobile_no || "—"}</span>,
-    enableSorting: false,
   },
 
+  // PHONE NO (badge-style like CRM)
   {
-    accessorKey: "role",
+    accessorKey: "phone_no",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Role" />
+      <DataTableColumnHeader column={column} title="Phone" />
     ),
-    cell: ({ row }) => <span>{row.original.role || "User"}</span>,
-    enableSorting: false,
+    cell: ({ row }) => (
+      <Badge variant="outline" className="hidden md:inline-block">
+        {row.original.phone_no}
+      </Badge>
+    ),
   },
 
+  // STATUS (optional)
   {
-    accessorKey: "created_at",
+    accessorKey: "status",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Registered At" />
+      <DataTableColumnHeader column={column} title="Status" />
     ),
-    cell: ({ row }) => <span>{row.original.created_at}</span>,
-    enableSorting: false,
+    cell: ({ row }) => (
+      <Badge variant="secondary">
+        {row.original.status || "Active"}
+      </Badge>
+    ),
   },
 
+  // ACTIONS (your File-1 style Pencil + Trash buttons)
   {
     id: "actions",
     cell: ({ row }) => {
@@ -174,30 +117,23 @@ export const registeredUsersColumns: ColumnDef<any>[] = [
         });
 
         const data = await res.json();
-        alert(res.ok ? "User deleted!" : data.error);
+
+        if (!res.ok) alert(data.error || "Something went wrong");
+        else alert("User deleted successfully!");
       };
 
       return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="icon">
-              <EllipsisVertical />
-            </Button>
-          </DropdownMenuTrigger>
+        <div className="flex gap-2 items-center justify-center">
+          <Button variant="ghost" size="icon">
+            <Pencil className="h-4 w-4" />
+          </Button>
 
-          <DropdownMenuContent>
-            <DropdownMenuItem onClick={() => alert(`Edit user ${userId}`)}>
-              Edit
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => alert(`Update user ${userId}`)}>
-              Update
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={handleDelete}>Delete</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+          <Button variant="ghost" size="icon" onClick={handleDelete}>
+            <Trash className="h-4 w-4 text-red-600" />
+          </Button>
+        </div>
       );
     },
     enableSorting: false,
   },
 ];
-

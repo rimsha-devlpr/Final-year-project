@@ -7,10 +7,11 @@ const supabase = createClient(
 );
 
 export async function getProfiles() {
-  const { data, error } = await supabase.from("profiles").select("*"); // <-- table name corrected
+  const { data, error } = await supabase.from("profiles").select("*");
   if (error) {
     console.error("Supabase error:", error);
     throw new Error(error.message);
   }
   return data;
+  
 }
