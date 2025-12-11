@@ -1,7 +1,7 @@
 "use client";
 import * as React from "react";
 
-import { LayoutDashboard, ChartBar, Gauge, ShoppingBag, GraduationCap, Forklift, Search } from "lucide-react";
+import { LayoutDashboard, ChartBar, Gauge,Home,Printer,User, ShoppingBag, GraduationCap, Forklift, Search } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -15,11 +15,11 @@ import {
 } from "@/components/ui/command";
 
 const searchItems = [
-  { group: "Dashboards", icon: LayoutDashboard, label: "Default" },
-  { group: "Dashboards", icon: ChartBar, label: "CRM", disabled: true },
-  { group: "Dashboards", icon: Gauge, label: "Analytics", disabled: true },
-  
+  { group: "Dashboards", icon: Home, label: "Default" },
+  { group: "Dashboards", icon: User, label: "CRM", disabled: true },
+  { group: "Dashboards", icon: Printer, label: "Analytics", disabled: true },
 ];
+
 
 export function SearchDialog() {
   const [open, setOpen] = React.useState(false);

@@ -1,3 +1,4 @@
+//import Home from "@/app/(external)/page";
 import {
   ShoppingBag,
   Forklift,
@@ -12,7 +13,10 @@ import {
   SquareArrowUpRight,
   LayoutDashboard,
   ChartBar,
+  User,
+  Printer,
   Banknote,
+  Home,
   Gauge,
   GraduationCap,
 } from "lucide-react";
@@ -45,22 +49,22 @@ export interface NavGroup {
 export const sidebarItems: NavGroup[] = [
   {
     id: 1,
-    label: "Dashboards",
+    //label: "Dashboards",
     items: [
       {
-        title: "Default",
+        title: "Home",
         url: "/dashboard/default",
-        icon: LayoutDashboard,
+        icon: Home,
       },
       {
-        title: "Registered Users",
+        title: "User Management",
         url: "/dashboard/crm",
-        icon: ChartBar,
+        icon: User,
       },
       {
         title: "Print Management",
         url: "/dashboard/print-management",
-        icon: Banknote,
+        icon: Printer,
         
       },
       {

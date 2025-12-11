@@ -1,14 +1,6 @@
 "use client";
 
-import {
-  Settings,
-  CircleHelp,
-  Search,
-  Database,
-  ClipboardList,
-  File,
-  Command,
-} from "lucide-react";
+import { PrinterIcon } from "lucide-react";
 
 import {
   Sidebar,
@@ -27,17 +19,28 @@ import { APP_CONFIG } from "@/config/app-config";
 
 export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
   return (
-    <Sidebar {...props}>
-      <SidebarHeader>
+    <Sidebar {...props} className="bg-white dark:bg-gray-900">
+      {/* Header */}
+      <SidebarHeader className="border-b border-gray-200 dark:border-gray-800">
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton
               asChild
-              className="data-[slot=sidebar-menu-button]:!p-1.5"
+              className="
+                !bg-black 
+                !text-white 
+                !shadow-[0_6px_6px_rgba(0,0,0,0.25)] 
+                !px-5 !py-5
+                !rounded-lg 
+                !cursor-default 
+                hover:!bg-black 
+                focus:!bg-black 
+                transition-none
+              "
             >
-              <a href="#">
-                <Command />
-                <span className="text-base font-semibold">
+              <a className="flex items-center gap-3">
+                <PrinterIcon className="h-5 w-5 text-white" />
+                <span className="text-lg font-semibold tracking-wide">
                   {APP_CONFIG.name}
                 </span>
               </a>
@@ -46,12 +49,13 @@ export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
         </SidebarMenu>
       </SidebarHeader>
 
-      <SidebarContent>
+      {/* Main Content */}
+      <SidebarContent className="pt-4">
         <NavMain items={sidebarItems} />
       </SidebarContent>
 
-      <SidebarFooter>
-        {/* Fixed — no rootUser needed */}
+      {/* Footer */}
+      <SidebarFooter className="border-t border-gray-200 dark:border-gray-800 pt-2">
         <NavUser />
       </SidebarFooter>
     </Sidebar>

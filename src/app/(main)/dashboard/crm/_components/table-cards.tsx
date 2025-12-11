@@ -88,81 +88,82 @@ export function TableCards() {
         <CardDescription>Manage all registered users here.</CardDescription>
 
         <CardAction>
-          <div className="flex items-center gap-2">
-            {/* Add New User Modal */}
-            <Dialog open={open} onOpenChange={setOpen}>
-              <DialogTrigger asChild>
-                <Button variant="outline" size="sm">
-                  <Plus className="h-4 w-4 mr-1" />
-                  Add New User
-                </Button>
-              </DialogTrigger>
-              <DialogContent className="sm:max-w-[400px]">
-                <DialogHeader>
-                  <DialogTitle>Add New User</DialogTitle>
-                </DialogHeader>
+  <div className="flex items-center gap-2">
+    {/* Table View Options */}
+    <DataTableViewOptions table={table} />
 
-                <div className="grid gap-4 py-2">
-                  <div className="grid gap-1">
-                    <Label htmlFor="username">Username</Label>
-                    <Input
-                      id="username"
-                      value={newUser.username}
-                      onChange={(e) => setNewUser({ ...newUser, username: e.target.value })}
-                    />
-                  </div>
-                  <div className="grid gap-1">
-                    <Label htmlFor="email">Email</Label>
-                    <Input
-                      id="email"
-                      type="email"
-                      value={newUser.email}
-                      onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
-                    />
-                  </div>
-                  <div className="grid gap-1">
-                    <Label htmlFor="full_name">Full Name</Label>
-                    <Input
-                      id="full_name"
-                      value={newUser.full_name}
-                      onChange={(e) => setNewUser({ ...newUser, full_name: e.target.value })}
-                    />
-                  </div>
-                  <div className="grid gap-1">
-                    <Label htmlFor="phone_no">Phone Number</Label>
-                    <Input
-                      id="phone_no"
-                      value={newUser.phone_no}
-                      onChange={(e) => setNewUser({ ...newUser, phone_no: e.target.value })}
-                    />
-                  </div>
-                  <div className="grid gap-1">
-                    <Label htmlFor="password">Password</Label>
-                    <Input
-                      id="password"
-                      type="password"
-                      value={newUser.password}
-                      onChange={(e) => setNewUser({ ...newUser, password: e.target.value })}
-                    />
-                  </div>
+    {/* Export Button */}
+    <Button variant="outline" size="sm">
+      <Download className="h-4 w-4 mr-1" />
+      <span className="hidden lg:inline">Export</span>
+    </Button>
 
-                  <Button onClick={handleAddUser} className="mt-2 w-full">
-                    Add User
-                  </Button>
-                </div>
-              </DialogContent>
-            </Dialog>
+    {/* Add New User Modal */}
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button variant="outline" size="sm" style={{ backgroundColor: "black", color: "white" }}>
+          <Plus className="h-4 w-4 mr-1" />
+          Add User
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[400px]">
+        <DialogHeader>
+          <DialogTitle>Add New User</DialogTitle>
+        </DialogHeader>
 
-            {/* Table View Options */}
-            <DataTableViewOptions table={table} />
-
-            {/* Export Button */}
-            <Button variant="outline" size="sm">
-              <Download className="h-4 w-4 mr-1" />
-              <span className="hidden lg:inline">Export</span>
-            </Button>
+        <div className="grid gap-4 py-2">
+          <div className="grid gap-1">
+            <Label htmlFor="username">Username</Label>
+            <Input
+              id="username"
+              value={newUser.username}
+              onChange={(e) => setNewUser({ ...newUser, username: e.target.value })}
+            />
           </div>
-        </CardAction>
+          <div className="grid gap-1">
+            <Label htmlFor="email">Email</Label>
+            <Input
+              id="email"
+              type="email"
+              value={newUser.email}
+              onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
+            />
+          </div>
+          <div className="grid gap-1">
+            <Label htmlFor="full_name">Full Name</Label>
+            <Input
+              id="full_name"
+              value={newUser.full_name}
+              onChange={(e) => setNewUser({ ...newUser, full_name: e.target.value })}
+            />
+          </div>
+          <div className="grid gap-1">
+            <Label htmlFor="phone_no">Phone Number</Label>
+            <Input
+              id="phone_no"
+              value={newUser.phone_no}
+              onChange={(e) => setNewUser({ ...newUser, phone_no: e.target.value })}
+            />
+          </div>
+          <div className="grid gap-1">
+            <Label htmlFor="password">Password</Label>
+            <Input
+              id="password"
+              type="password"
+              value={newUser.password}
+              onChange={(e) => setNewUser({ ...newUser, password: e.target.value })}
+            />
+          </div>
+
+          <Button onClick={handleAddUser} className="mt-2 w-full">
+            Add User
+          </Button>
+        </div>
+      </DialogContent>
+    </Dialog>
+  </div>
+</CardAction>
+
       </CardHeader>
 
       <CardContent>
