@@ -1,31 +1,30 @@
-
 import packageJson from "../../package.json";
 
 const currentYear = new Date().getFullYear();
 
 export const APP_CONFIG = {
-  name: "AI StudyStation",
+  name: "BusinessHub Pro",
   version: packageJson.version,
-  copyright: `© ${currentYear}, Department of Computer Science, University of Gujrat.`,
+  copyright: `© ${currentYear}, BusinessHub Solutions. All rights reserved.`,
   meta: {
-    title: "AI StudyStation – Intelligent Note Generation & Automated Printing System",
+    title: "BusinessHub Pro – Smart Management & Operations Dashboard",
     description: `
-      AI StudyStation is a modern AI-powered platform developed by BSCS students of the Department of Computer Science,
-      University of Gujrat. It intelligently generates, organizes, and automates the printing of academic notes using
-      OCR and Large Language Models (LLMs). The system enables students to digitize handwritten notes, create summaries,
-      and securely print materials using a token-based workflow — bridging the gap between digital learning and physical access.
-      
-      Developed by: 
-      Ali Hassan (22021519-076), Meera Shahzadi (22021519-060), Rimsha Naeem (22021519-066)
-      Supervised by: Dr. Naveed Anwar Butt
+      BusinessHub Pro is a modern, AI-powered platform designed to help businesses of all sizes manage their daily
+      operations with ease. The system centralizes business activities by tracking customers, orders, staff operations,
+      performance metrics, and real-time insights — enabling owners to run their business smarter and more efficiently.
+
+      With intelligent automation, activity monitoring, and a clean dashboard interface, BusinessHub Pro streamlines
+      workflow management and provides data-driven decision support for retail shops, cafés, service providers, and
+      general businesses.
+
+      Developed by the BusinessHub Engineering Team.
     `,
   },
   organization: {
-    department: "Department of Computer Science",
-    faculty: "Faculty of Computing & Information Technology",
-    university: "University of Gujrat",
-    supervisor: "Dr. Naveed Anwar Butt",
-    contactEmail: "naveed@uog.edu.pk",
+    department: "Business Operations & Intelligence",
+    faculty: "Management & Technology Division",
+    university: "BusinessHub Solutions",
+    supervisor: "Management Team",
+    contactEmail: "support@businesshub.com",
   },
 };
-

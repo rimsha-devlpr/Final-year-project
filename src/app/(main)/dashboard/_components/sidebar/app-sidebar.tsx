@@ -1,6 +1,7 @@
 "use client";
 
 import { PrinterIcon } from "lucide-react";
+import { Briefcase } from "lucide-react";
 
 import {
   Sidebar,
@@ -39,7 +40,7 @@ export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
               "
             >
               <a className="flex items-center gap-3">
-                <PrinterIcon className="h-5 w-5 text-white" />
+                <Briefcase className="h-5 w-5 text-white" />
                 <span className="text-lg font-semibold tracking-wide">
                   {APP_CONFIG.name}
                 </span>

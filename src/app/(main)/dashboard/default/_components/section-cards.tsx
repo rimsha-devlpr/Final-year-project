@@ -1,4 +1,4 @@
-import { TrendingUp, Printer, Users } from "lucide-react";
+import { TrendingUp, Users, Activity } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardAction, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 
@@ -6,40 +6,62 @@ export function SectionCards() {
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
 
-      {/* Total Pages Printed */}
+      {/* Total Activity */}
       <Card className="shadow-sm border border-gray-100 dark:border-gray-800">
         <CardHeader className="pb-2">
           <CardDescription className="text-xs text-muted-foreground">
-            Total Pages Printed
+            Total Activity
           </CardDescription>
-          <CardTitle className="text-xl font-semibold tabular-nums flex items-baseline gap-1">
-            <span className="text-sm">Rs</span>
-            <span>0</span>
+          <CardTitle className="text-xl font-semibold tabular-nums">
+            0
           </CardTitle>
           <CardAction>
             <Badge variant="outline" className="text-xs flex items-center gap-1">
-              <Printer className="h-3 w-3" />
+              <Activity className="h-3 w-3" />
               +0%
             </Badge>
           </CardAction>
         </CardHeader>
         <CardFooter className="flex-col items-start gap-1 text-[13px] text-muted-foreground">
           <div className="flex items-center gap-1 text-gray-700 dark:text-gray-300">
-            <Printer className="h-3 w-3" /> Students actively printing
+            <Activity className="h-3 w-3" /> Operations running smoothly
           </div>
-          <div>Tracked via secure token printing</div>
+          <div>Across all business processes</div>
         </CardFooter>
       </Card>
 
-      {/* New Students Registered */}
+      {/* New Customers */}
       <Card className="shadow-sm border border-gray-100 dark:border-gray-800">
         <CardHeader className="pb-2">
           <CardDescription className="text-xs text-muted-foreground">
-            New Students Registered
+            New Customers
           </CardDescription>
-          <CardTitle className="text-xl font-semibold tabular-nums flex items-baseline gap-1">
-            <span className="text-sm">Rs</span>
-            <span>0</span>
+          <CardTitle className="text-xl font-semibold tabular-nums">
+            0
+          </CardTitle>
+          <CardAction>
+            <Badge variant="outline" className="text-xs flex items-center gap-1">
+              <Users className="h-3 w-3" />
+              +0%
+            </Badge>
+          </CardAction>
+        </CardHeader>
+        <CardFooter className="flex-col items-start gap-1 text-[13px] text-muted-foreground">
+          <div className="flex items-center gap-1 text-gray-700 dark:text-gray-300">
+            <Users className="h-3 w-3" /> Customer base increasing steadily
+          </div>
+          <div>Across all business locations</div>
+        </CardFooter>
+      </Card>
+
+      {/* Active Orders */}
+      <Card className="shadow-sm border border-gray-100 dark:border-gray-800">
+        <CardHeader className="pb-2">
+          <CardDescription className="text-xs text-muted-foreground">
+            Active Orders
+          </CardDescription>
+          <CardTitle className="text-xl font-semibold tabular-nums">
+            0
           </CardTitle>
           <CardAction>
             <Badge variant="outline" className="text-xs flex items-center gap-1">
@@ -50,34 +72,9 @@ export function SectionCards() {
         </CardHeader>
         <CardFooter className="flex-col items-start gap-1 text-[13px] text-muted-foreground">
           <div className="flex items-center gap-1 text-gray-700 dark:text-gray-300">
-            <Users className="h-3 w-3" /> Enrollment steadily growing
+            <TrendingUp className="h-3 w-3" /> Smooth order processing
           </div>
-          <div>Across all faculties</div>
-        </CardFooter>
-      </Card>
-
-      {/* Active Print Requests */}
-      <Card className="shadow-sm border border-gray-100 dark:border-gray-800">
-        <CardHeader className="pb-2">
-          <CardDescription className="text-xs text-muted-foreground">
-            Active Print Requests
-          </CardDescription>
-          <CardTitle className="text-xl font-semibold tabular-nums flex items-baseline gap-1">
-            <span className="text-sm">Rs</span>
-            <span>0</span>
-          </CardTitle>
-          <CardAction>
-            <Badge variant="outline" className="text-xs flex items-center gap-1">
-              <Printer className="h-3 w-3" />
-              +0%
-            </Badge>
-          </CardAction>
-        </CardHeader>
-        <CardFooter className="flex-col items-start gap-1 text-[13px] text-muted-foreground">
-          <div className="flex items-center gap-1 text-gray-700 dark:text-gray-300">
-            <Printer className="h-3 w-3" /> Stable print queue
-          </div>
-          <div>Token-based secure printing</div>
+          <div>Real-time tracking of customer orders</div>
         </CardFooter>
       </Card>
 

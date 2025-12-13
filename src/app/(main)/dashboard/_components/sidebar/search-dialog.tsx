@@ -1,7 +1,7 @@
 "use client";
 import * as React from "react";
 
-import { LayoutDashboard, ChartBar, Gauge,Home,Printer,User, ShoppingBag, GraduationCap, Forklift, Search } from "lucide-react";
+import { LayoutDashboard, ChartBar, Gauge,Home,Printer,User, ShoppingBag,MessageCircle , GraduationCap, Forklift, Search, Banknote, Briefcase } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -13,11 +13,16 @@ import {
   CommandList,
   CommandSeparator,
 } from "@/components/ui/command";
+import { users } from "@/data/users";
 
 const searchItems = [
-  { group: "Dashboards", icon: Home, label: "Default" },
-  { group: "Dashboards", icon: User, label: "CRM", disabled: true },
-  { group: "Dashboards", icon: Printer, label: "Analytics", disabled: true },
+  { group: "Dashboards", icon: Home, label: "Home" },
+  { group: "Dashboards", icon: Briefcase, label: "Business  Management" },
+    { group: "Dashboards", icon: User, label: "User Management" },
+
+
+  { group: "Dashboards", icon: Banknote, label: "Finance Management" },
+  { title: "Feedback", url: "/dashboard/feedback", icon: MessageCircle }, // updated
 ];
 
 

@@ -6,8 +6,11 @@ import {
   MessageSquare,
   Calendar,
   Kanban,
+  Activity,
+  ClipboardList,
   ReceiptText,
   Users,
+  MessageCircle,
   Lock,
   Fingerprint,
   SquareArrowUpRight,
@@ -46,10 +49,12 @@ export interface NavGroup {
   items: NavMainItem[];
 }
 
+// Sidebar items for admin dashboard
 export const sidebarItems: NavGroup[] = [
   {
     id: 1,
-    //label: "Dashboards",
+    // Main admin section
+    // label: "Dashboards", // Uncomment if you want a group label
     items: [
       {
         title: "Home",
@@ -59,34 +64,46 @@ export const sidebarItems: NavGroup[] = [
       {
         title: "User Management",
         url: "/dashboard/crm",
-        icon: User,
+        icon: Users,
       },
       {
-        title: "Print Management",
-        url: "/dashboard/print-management",
-        icon: Printer,
-        
+        title: "Business Management",
+        url: "/dashboard/Business Managment",
+        icon: ClipboardList,
       },
+      {
+        title: "Finance Management",
+        url: "/dashboard/finance",
+        icon: Banknote,
+      },
+      {
+  title: "Analytics",
+  url: "/dashboard/analytics",
+  icon: ChartBar, // lucide-react se ChartBar icon
+},
+
+
+      /*
       {
         title: "Chat",
         url: "/main/dashboard/chat", // ✅ Correct route to your chat page
         icon: MessageSquare,
         // comingSoon: true, // Uncomment if you want to hide temporarily
       },
-      /*
-      {
-        title: "Analytics",
-        url: "/dashboard/analytics",
-        icon: Gauge,
-        comingSoon: true,
-      },
-      {
-        title: "E-commerce",
-        url: "/dashboard/e-commerce",
-        icon: ShoppingBag,
-        comingSoon: true,
-      },
       */
+    ],
+  },
+  {
+    id: 2,
+    label: "Support",
+    // Niche group for auxiliary items like Feedback
+    items: [
+      {
+        title: "Feedback",
+        url: "/main/dashboard/MessageCircle", // ✅ Route to Feedback page
+        icon: MessageCircle,
+        // comingSoon: true, // Uncomment if needed
+      },
     ],
   },
   /*

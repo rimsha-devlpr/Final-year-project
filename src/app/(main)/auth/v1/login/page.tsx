@@ -4,7 +4,7 @@ import Link from "next/link";
 import { BookOpenText } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase-client";
-import { LoginForm } from "../../_components/login-form"; // named export
+import { LoginForm } from "../../_components/login-form"; 
 import { GoogleButton } from "../../_components/social-auth/google-button";
 
 export default function LoginV1() {
@@ -27,10 +27,10 @@ export default function LoginV1() {
             <BookOpenText className="text-primary-foreground mx-auto size-12" />
             <div className="space-y-2">
               <h1 className="text-primary-foreground text-4xl font-light">
-                AI StudyStation
+                BusinessHub Pro
               </h1>
               <p className="text-primary-foreground/80 text-lg">
-                Intelligent Note Generation & Automated Printing System
+                Smart Business Support Platform with Real-Time Queue Optimization
               </p>
             </div>
           </div>
@@ -43,17 +43,17 @@ export default function LoginV1() {
           {/* Header */}
           <div className="space-y-4 text-center">
             <div className="font-semibold tracking-tight text-xl">
-              Welcome to AI StudyStation
+              Welcome to BusinessHub Pro
             </div>
             <div className="text-muted-foreground mx-auto max-w-xl">
-              Login to your account to access intelligent note generation, AI-powered summaries, 
-              and automated printing dashboard.
+              Login to access real-time queue management, customer activity insights,
+              and smart business operations dashboard.
             </div>
           </div>
 
           {/* Login Form */}
           <div className="space-y-4">
-            <LoginForm /> {/* ✅ named export works here */}
+            <LoginForm />
 
             <GoogleButton
               className="w-full"
@@ -73,7 +73,7 @@ export default function LoginV1() {
           </div>
 
           <p className="text-center text-xs text-muted-foreground mt-6">
-            © Department of Computer Science, University of Gujrat
+            © BusinessHub Solutions. All rights reserved.
           </p>
         </div>
       </div>

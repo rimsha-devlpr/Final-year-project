@@ -263,7 +263,7 @@ export const registeredUsersColumns: ColumnDef<any>[] = [
       const handleDelete = async () => {
         if (!confirm("Are you sure you want to delete this user?")) return;
 
-        const res = await fetch("/api/delete-user", {
+        const res = await fetch("/api/users/delete", {
           method: "DELETE",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ id: userId }),

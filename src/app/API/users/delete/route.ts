@@ -7,12 +7,14 @@ export async function DELETE(req: Request) {
     const body = await req.json();
     let ids: string[] = [];
 
-    // Accept single id or array of ids
     if (body.id) ids = [body.id];
-    else if (body.ids && Array.isArray(body.ids)) ids = body.ids;
+    else if (Array.isArray(body.ids)) ids = body.ids;
 
-    if (!ids || ids.length === 0) {
-      return NextResponse.json({ error: "User ID(s) required" }, { status: 400 });
+    if (ids.length === 0) {
+      return NextResponse.json(
+        { error: "User ID(s) required" },
+        { status: 400 }
+      );
     }
 
     const supabaseAdmin = createClient(
@@ -21,30 +23,28 @@ export async function DELETE(req: Request) {
     );
 
     for (const id of ids) {
-      console.log("Deleting user ID:", id);
+      console.log("Deleting auth user:", id);
 
-      // Delete from profiles table
-      const { error: profileError } = await supabaseAdmin
-        .from("profiles")
-        .delete()
-        .eq("id", id);
+      const { error } =
+        await supabaseAdmin.auth.admin.deleteUser(id);
 
-      if (profileError) {
-        console.error("Profile delete error:", profileError);
-        return NextResponse.json({ error: profileError.message }, { status: 400 });
-      }
-
-      // Delete from auth
-      const { error: authError } = await supabaseAdmin.auth.admin.deleteUser(id);
-      if (authError) {
-        console.error("Auth delete error:", authError);
-        return NextResponse.json({ error: authError.message }, { status: 400 });
+      if (error) {
+        console.error("Auth delete error:", error);
+        return NextResponse.json(
+          { error: error.message },
+          { status: 400 }
+        );
       }
     }
 
-    return NextResponse.json({ message: "User(s) deleted successfully" });
+    return NextResponse.json({
+      message: "User(s) deleted successfully",
+    });
   } catch (err: any) {
     console.error("Delete API error:", err);
-    return NextResponse.json({ error: err.message }, { status: 500 });
+    return NextResponse.json(
+      { error: err.message },
+      { status: 500 }
+    );
   }
 }
