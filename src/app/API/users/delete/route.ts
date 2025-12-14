@@ -1,4 +1,3 @@
-// src/app/api/users/delete/route.ts
 import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 
@@ -17,21 +16,37 @@ export async function DELETE(req: Request) {
       );
     }
 
+    // 🔐 Service role client
     const supabaseAdmin = createClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
       process.env.SUPABASE_SERVICE_ROLE_KEY!
     );
 
+    // 1️⃣ Delete from "User" table first
+    const { error: tableError } = await supabaseAdmin
+      .from("User")   // 👈 IMPORTANT
+      .delete()
+      .in("id", ids);
+
+    if (tableError) {
+      console.error("User table delete error:", tableError);
+      return NextResponse.json(
+        { error: tableError.message },
+        { status: 400 }
+      );
+    }
+
+    // 2️⃣ Delete from Auth
     for (const id of ids) {
       console.log("Deleting auth user:", id);
 
-      const { error } =
+      const { error: authError } =
         await supabaseAdmin.auth.admin.deleteUser(id);
 
-      if (error) {
-        console.error("Auth delete error:", error);
+      if (authError) {
+        console.error("Auth delete error:", authError);
         return NextResponse.json(
-          { error: error.message },
+          { error: authError.message },
           { status: 400 }
         );
       }
@@ -40,6 +55,7 @@ export async function DELETE(req: Request) {
     return NextResponse.json({
       message: "User(s) deleted successfully",
     });
+
   } catch (err: any) {
     console.error("Delete API error:", err);
     return NextResponse.json(

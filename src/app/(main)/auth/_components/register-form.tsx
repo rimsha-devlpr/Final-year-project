@@ -34,16 +34,12 @@ export function RegisterForm() {
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {
     setIsLoading(true);
     try {
-      // 1️⃣ Sign up with Supabase Auth and save user_metadata
       const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
         email: data.email,
         password: data.password,
         options: {
           emailRedirectTo: window.location.origin + "/auth/v1/login",
-          data: {
-            name: data.fullName, // name stored in user_metadata
-            role: "admin",       // optional role
-          },
+          data: { name: data.fullName, role: "admin" },
         },
       });
 
@@ -52,7 +48,6 @@ export function RegisterForm() {
 
       const userId = signUpData.user.id;
 
-      // 2️⃣ Insert into admins table using Auth user id
       const { error: adminError } = await supabase.from("admins").insert({
         id: userId,
         full_name: data.fullName,
@@ -73,12 +68,18 @@ export function RegisterForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4" autoComplete="off" id="registerForm">
+        {/* Hidden dummy inputs to prevent browser autofill */}
+        <input type="text" name="fakeFullName" style={{ display: 'none' }} />
+        <input type="email" name="fakeEmail" style={{ display: 'none' }} />
+        <input type="password" name="fakePassword" style={{ display: 'none' }} />
+        <input type="password" name="fakeConfirmPassword" style={{ display: 'none' }} />
+
         <FormField control={form.control} name="fullName" render={({ field }) => (
           <FormItem>
             <FormLabel>Full Name</FormLabel>
             <FormControl>
-              <Input {...field} placeholder="John Doe" />
+              <Input {...field} placeholder="Your Name" autoComplete="off" name="fullNameField123" />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -88,7 +89,7 @@ export function RegisterForm() {
           <FormItem>
             <FormLabel>Email</FormLabel>
             <FormControl>
-              <Input {...field} type="email" placeholder="you@example.com" />
+              <Input {...field} type="email" placeholder="you@example.com" autoComplete="username" name="emailField123" />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -98,7 +99,7 @@ export function RegisterForm() {
           <FormItem>
             <FormLabel>Password</FormLabel>
             <FormControl>
-              <Input {...field} type="password" placeholder="••••••••" />
+              <Input {...field} type="password" placeholder="••••••••" autoComplete="new-password" name="passwordField123" />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -108,7 +109,7 @@ export function RegisterForm() {
           <FormItem>
             <FormLabel>Confirm Password</FormLabel>
             <FormControl>
-              <Input {...field} type="password" placeholder="••••••••" />
+              <Input {...field} type="password" placeholder="••••••••" autoComplete="new-password" name="confirmPasswordField123" />
             </FormControl>
             <FormMessage />
           </FormItem>

@@ -1,143 +1,3 @@
-/*"use client";
-
-import { ColumnDef } from "@tanstack/react-table";
-import { Checkbox } from "@/components/ui/checkbox";
-import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Pencil, Trash } from "lucide-react";
-
-export const registeredUsersColumns: ColumnDef<any>[] = [
-  // SELECT CHECKBOX (centered)
-  {
-    id: "select",
-    header: ({ table }) => (
-      <div className="flex items-center justify-center">
-        <Checkbox
-          checked={table.getIsAllPageRowsSelected()}
-          onCheckedChange={(value) =>
-            table.toggleAllPageRowsSelected(!!value)
-          }
-          aria-label="Select all"
-        />
-      </div>
-    ),
-    cell: ({ row }) => (
-      <div className="flex items-center justify-center">
-        <Checkbox
-          checked={row.getIsSelected()}
-          onCheckedChange={(value) => row.toggleSelected(!!value)}
-          aria-label="Select row"
-        />
-      </div>
-    ),
-    enableSorting: false,
-    enableHiding: false,
-  },
-
-  // USERNAME
-  {
-    accessorKey: "username",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Username" />
-    ),
-    cell: ({ row }) => (
-      <span className="max-w-[140px] truncate whitespace-nowrap">
-        {row.original.username}
-      </span>
-    ),
-    enableSorting: true,
-  },
-
-  // FULL NAME
-  {
-    accessorKey: "full_name",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Full Name" />
-    ),
-    cell: ({ row }) => (
-      <span className="max-w-[160px] truncate whitespace-nowrap hidden sm:block">
-        {row.original.full_name}
-      </span>
-    ),
-  },
-
-  // EMAIL
-  {
-    accessorKey: "email",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Email" />
-    ),
-    cell: ({ row }) => (
-      <span className="max-w-[200px] truncate whitespace-nowrap hidden lg:block text-muted-foreground">
-        {row.original.email}
-      </span>
-    ),
-  },
-
-  // PHONE NO (badge-style like CRM)
-  {
-    accessorKey: "phone_no",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Phone" />
-    ),
-    cell: ({ row }) => (
-      <Badge variant="outline" className="hidden md:inline-block">
-        {row.original.phone_no}
-      </Badge>
-    ),
-  },
-
-  // STATUS (optional)
-  {
-    accessorKey: "status",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Status" />
-    ),
-    cell: ({ row }) => (
-      <Badge variant="secondary">
-        {row.original.status || "Active"}
-      </Badge>
-    ),
-  },
-
-  // ACTIONS (your File-1 style Pencil + Trash buttons)
-  {
-    id: "actions",
-    cell: ({ row }) => {
-      const userId = row.original.id;
-
-      const handleDelete = async () => {
-        if (!confirm("Are you sure you want to delete this user?")) return;
-
-        const res = await fetch("/api/delete-user", {
-          method: "DELETE",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ id: userId }),
-        });
-
-        const data = await res.json();
-
-        if (!res.ok) alert(data.error || "Something went wrong");
-        else alert("User deleted successfully!");
-      };
-
-      return (
-        <div className="flex gap-2 items-center justify-center">
-          <Button variant="ghost" size="icon">
-            <Pencil className="h-4 w-4" />
-          </Button>
-
-          <Button variant="ghost" size="icon" onClick={handleDelete}>
-            <Trash className="h-4 w-4 text-red-600" />
-          </Button>
-        </div>
-      );
-    },
-    enableSorting: false,
-  },
-];
-*/
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
@@ -145,148 +5,215 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import {
+  AlertDialog,
+  AlertDialogTrigger,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogCancel,
+  AlertDialogAction,
+} from "@/components/ui/alert-dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Pencil, Trash } from "lucide-react";
+import { useState } from "react";
 
 export const registeredUsersColumns: ColumnDef<any>[] = [
-  // SELECT CHECKBOX (centered)
+  /* ---------- SELECT ---------- */
   {
     id: "select",
     header: ({ table }) => (
-      <div className="flex items-center justify-center">
+      <div className="flex justify-center">
         <Checkbox
           checked={table.getIsAllPageRowsSelected()}
-          onCheckedChange={(value) =>
-            table.toggleAllPageRowsSelected(!!value)
-          }
-          aria-label="Select all"
+          onCheckedChange={(v) => table.toggleAllPageRowsSelected(!!v)}
         />
       </div>
     ),
     cell: ({ row }) => (
-      <div className="flex items-center justify-center">
+      <div className="flex justify-center">
         <Checkbox
           checked={row.getIsSelected()}
-          onCheckedChange={(value) => row.toggleSelected(!!value)}
-          aria-label="Select row"
+          onCheckedChange={(v) => row.toggleSelected(!!v)}
         />
       </div>
     ),
-    enableSorting: false,
-    enableHiding: false,
   },
 
-  // ID column (start)
-// ID column (truncated + responsive)
-{
-  accessorKey: "id",
-  header: ({ column }) => <DataTableColumnHeader column={column} title="ID" />,
-  cell: ({ row }) => (
-    <span className="tabular-nums hidden md:block">
-      {row.original.id.slice(0, 8)} {/* sirf pehle 8 chars */}
-    </span>
-  ),
-  enableSorting: true,
-},
+  /* ---------- ID ---------- */
+  {
+    accessorKey: "id",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="ID" />
+    ),
+    cell: ({ row }) => row.original.id.slice(0, 8),
+  },
 
-  // USERNAME
+  /* ---------- USERNAME ---------- */
   {
     accessorKey: "username",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Username" />
     ),
-    cell: ({ row }) => (
-      <span className="max-w-[140px] truncate whitespace-nowrap">
-        {row.original.username}
-      </span>
-    ),
-    enableSorting: true,
   },
 
-  // FULL NAME
+  /* ---------- FULL NAME ---------- */
   {
     accessorKey: "full_name",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Full Name" />
     ),
-    cell: ({ row }) => (
-      <span className="max-w-[160px] truncate whitespace-nowrap hidden sm:block">
-        {row.original.full_name}
-      </span>
-    ),
   },
 
-  // EMAIL
+  /* ---------- EMAIL ---------- */
   {
     accessorKey: "email",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Email" />
     ),
-    cell: ({ row }) => (
-      <span className="max-w-[200px] truncate whitespace-nowrap hidden lg:block text-muted-foreground">
-        {row.original.email}
-      </span>
-    ),
   },
 
-  // PHONE NO (badge-style like CRM)
+  /* ---------- PHONE ---------- */
   {
     accessorKey: "phone_no",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Phone" />
     ),
     cell: ({ row }) => (
-      <Badge variant="outline" className="hidden md:inline-block">
-        {row.original.phone_no}
-      </Badge>
+      <Badge variant="outline">{row.original.phone_no}</Badge>
     ),
   },
 
-  // STATUS (optional)
+  /* ---------- STATUS ---------- */
   {
     accessorKey: "status",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Status" />
     ),
     cell: ({ row }) => (
-      <Badge variant="secondary">
-        {row.original.status || "Active"}
-      </Badge>
+      <Badge variant="secondary">{row.original.status || "Active"}</Badge>
     ),
   },
 
-  // ACTIONS (Pencil + Trash buttons)
+  /* ---------- ACTIONS ---------- */
   {
     id: "actions",
-    cell: ({ row }) => {
-      const userId = row.original.id;
+    cell: ({ row, table }) => {
+      const user = row.original;
 
-      const handleDelete = async () => {
-        if (!confirm("Are you sure you want to delete this user?")) return;
+      const [form, setForm] = useState({
+        username: user.username,
+        full_name: user.full_name,
+        email: user.email,
+        phone_no: user.phone_no,
+       // status: user.status || "Active",
+      });
 
-        const res = await fetch("/api/users/delete", {
-          method: "DELETE",
+      const handleUpdate = async () => {
+        const res = await fetch("/api/users/update", {
+          method: "PATCH",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ id: userId }),
+          body: JSON.stringify({ id: user.id, ...form }),
         });
 
-        const data = await res.json();
+        if (!res.ok) {
+          alert("Update failed");
+          return;
+        }
 
-        if (!res.ok) alert(data.error || "Something went wrong");
-        else alert("User deleted successfully!");
+        /* 🔥 INSTANT UI UPDATE (no refresh) */
+        row.original.username = form.username;
+        row.original.full_name = form.full_name;
+        row.original.email = form.email;
+        row.original.phone_no = form.phone_no;
+        row.original.status = form.status;
+
+        table.options.meta?.updateData?.();
+      };
+
+      const handleDelete = async () => {
+        await fetch("/api/users/delete", {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ id: user.id }),
+        });
       };
 
       return (
-        <div className="flex gap-2 items-center justify-center">
-          <Button variant="ghost" size="icon">
-            <Pencil className="h-4 w-4" />
-          </Button>
+        <div className="flex justify-center gap-2">
+          {/* ===== EDIT ===== */}
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button variant="ghost" size="icon">
+                <Pencil className="h-4 w-4" />
+              </Button>
+            </AlertDialogTrigger>
 
-          <Button variant="ghost" size="icon" onClick={handleDelete}>
-            <Trash className="h-4 w-4 text-red-600" />
-          </Button>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Edit User</AlertDialogTitle>
+                <AlertDialogDescription>
+                  Update user details and click save.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+
+              <div className="grid gap-3 mt-2">
+                {[
+                  ["Username", "username"],
+                  ["Full Name", "full_name"],
+                  ["Email", "email"],
+                  ["Phone", "phone_no"],
+              //    ["Status", "status"],
+                ].map(([label, key]) => (
+                  <div key={key} className="grid gap-1">
+                    <Label>{label}</Label>
+                    <Input
+                      value={(form as any)[key]}
+                      onChange={(e) =>
+                        setForm({ ...form, [key]: e.target.value })
+                      }
+                    />
+                  </div>
+                ))}
+              </div>
+
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction onClick={handleUpdate}>
+                  Save
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+
+          {/* ===== DELETE ===== */}
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button variant="ghost" size="icon">
+                <Trash className="h-4 w-4 text-red-600" />
+              </Button>
+            </AlertDialogTrigger>
+
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Delete User</AlertDialogTitle>
+                <AlertDialogDescription>
+                  Are you sure you want to permanently delete this user? This action cannot be undone.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction onClick={handleDelete}>
+                  Delete
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </div>
       );
     },
-    enableSorting: false,
   },
 ];

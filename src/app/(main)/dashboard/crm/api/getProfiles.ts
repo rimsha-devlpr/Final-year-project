@@ -7,7 +7,7 @@ const supabase = createClient(
 );
 
 export async function getProfiles() {
-  const { data, error } = await supabase.from("profiles").select("*");
+  const { data, error } = await supabase.from("User").select("*");
   if (error) {
     console.error("Supabase error:", error);
     throw new Error(error.message);
